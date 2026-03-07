@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="pl">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="style.css" />
+		<title>Familiada kół naukowych</title>
+	</head>
+	<body>
+		<div id="upper_points">
+			<div class="points" id="blue_team">
+				<p>0</p>
+			</div>
+			<div class="points" id="avaible_point">
+				<p>100</p>
+			</div>
+			<div class="points" id="red_team">
+				<p>0</p>
+			</div>
+		</div>
+		<div id="lower_part">
+			<div class="mistakes" id="left_mistakes">
+				<img src="X — kopia_bez_tla.png" alt="RED_X" />
+				<img src="X — kopia_bez_tla.png" alt="RED_X" />
+				<img src="X — kopia_bez_tla.png" alt="RED_X" />
+			</div>
+			<div id="main_question">
+				<h3>Dokąd nocą tupta jeż?</h3>
+				<ol>
+					<li>
+						<span id="a1">............................</span>
+						<span id="p1"></span>
+					</li>
+					<li>
+						<span id="a2">............................</span>
+						<span id="p2"></span>
+					</li>
+					<li>
+						<span id="a3">............................</span>
+						<span id="p3"></span>
+					</li>
+					<li>
+						<span id="a4">............................</span>
+						<span id="p4"></span>
+					</li>
+					<li>
+						<span id="a5">............................</span>
+						<span id="p5"></span>
+					</li>
+				</ol>
+				<p>Suma <span id="suma">0</span></p>
+			</div>
+			<div class="mistakes" id="right_mistakes">
+				<img src="X — kopia_bez_tla.png" alt="RED_X" />
+				<img src="X — kopia_bez_tla.png" alt="RED_X" />
+				<img src="X — kopia_bez_tla.png" alt="RED_X" />
+			</div>
+		</div>
+		<img
+			id="bigX"
+			src="X — kopia_bez_tla.png"
+			style="
+				display: none;
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				width: 600px;
+				z-index: 1000;
+			"
+		/>
+		<audio id="wastedSound">
+			<source src="wasted_GTA_sound.mp4" type="audio/mpeg" />
+		</audio>
+	</body>
+</html>
+<script>
+	let allQuestions = []
+	let currentQuestionIndex = 0
+	let answers = []
+	let currentTeam = "blue"
+
+	// Wczytaj pytania z JSON
+	async function loadQuestions() {
+		try {
+			const response = await fetch("questions.json")
+			const data = await response.json()
+			allQuestions = data.questions
+			console.log("Pytania wczytane:", allQuestions.length)
+
+			// Wyświetl pierwsze pytanie
+			loadQuestion(0)
+		} catch (error) {
+			console.error("Błąd wczytywania pytań:", error)
+		}
+	}
+
+	// Załaduj pytanie o danym indeksie
+	function loadQuestion(index) {
+		if (index >= allQuestions.length) {
+			index = 0 // Wróć do początku gdy skończy się lista
+		}
+		currentQuestionIndex = index
+		const question = allQuestions[index]
+
+		// Aktualizuj tytuł pytania
+		document.getElementById("main_question").querySelector("h3").innerText =
+			question.title
+
+		// Ustaw odpowiedzi dla tego pytania
+		answers = question.answers
+
+		// Resetuj wyświetlane odpowiedzi
+		for (let i = 1; i <= 5; i++) {
+			document.getElementById("a" + i).innerText = "............."
+			document.getElementById("p" + i).innerText = ""
+		}
+		document.getElementById("suma").innerText = "0"
+		document
+			.getElementById("main_question")
+			.querySelector("h3").style.visibility = "hidden"
+
+		// Zaktualizuj dostępne punkty
+		updateAvailablePoints()
+	}
+
+	function reveal(n) {
+		// Pokaż tylko nagłówek (h3) przy pierwszej odpowiedzi
+		document
+			.getElementById("main_question")
+			.querySelector("h3").style.visibility = "visible"
+
+		document.getElementById("a" + n).innerText = answers[n - 1].text
+		document.getElementById("p" + n).innerText = answers[n - 1].points
+
+		// Oblicz sumę wszystkich odsłoniętych odpowiedzi
+		let suma = 0
+		for (let i = 1; i <= 5; i++) {
+			let pointsElement = document.getElementById("p" + i)
+			if (pointsElement.innerText !== "") {
+				suma += parseInt(pointsElement.innerText)
+			}
+		}
+		document.getElementById("suma").innerText = suma
+	}
+
+	function updateAvailablePoints() {
+		// Oblicz sumę wszystkich dostępnych punktów do zdobycia
+		let totalPoints = 0
+		for (let i = 0; i < answers.length; i++) {
+			totalPoints += answers[i].points
+		}
+		document.getElementById("avaible_point").querySelector("p").innerText =
+			totalPoints
+	}
+
+	let mistakes = 0
+	let soundPlayed = false
+	let bigXTimeout = null
+
+	function setTeam(team) {
+		document.getElementById("blue_team").style.boxShadow = "none"
+		document.getElementById("red_team").style.boxShadow = "none"
+
+		if (team === "blue") {
+			document.getElementById("blue_team").style.boxShadow =
+				"0 0 25px #1e90ff"
+		}
+
+		if (team === "red") {
+			document.getElementById("red_team").style.boxShadow = "0 0 25px red"
+		}
+
+		currentTeam = team
+	}
+
+	function addPointsToTeam() {
+		let suma = parseInt(document.getElementById("suma").innerText)
+		let teamElement = document.getElementById(currentTeam + "_team")
+		let currentPoints = parseInt(teamElement.querySelector("p").innerText)
+
+		teamElement.querySelector("p").innerText = currentPoints + suma
+
+		// Załaduj następne pytanie
+		loadQuestion(currentQuestionIndex + 1)
+
+		// Resetuj błędy
+		mistakes = 0
+		soundPlayed = false
+		if (bigXTimeout) {
+			clearTimeout(bigXTimeout)
+		}
+		document.getElementById("bigX").style.display = "none"
+		let leftXs = document.querySelectorAll("#left_mistakes img")
+		let rightXs = document.querySelectorAll("#right_mistakes img")
+		leftXs.forEach((x) => (x.style.opacity = "0"))
+		rightXs.forEach((x) => (x.style.opacity = "0"))
+	}
+
+	document.addEventListener("keydown", function (e) {
+		// Klawisze 1-5 do odsłaniania odpowiedzi
+		if (e.key >= "1" && e.key <= "5") {
+			reveal(parseInt(e.key))
+		}
+
+		// Strzałki do wyboru drużyny
+		if (e.key === "ArrowRight") {
+			setTeam("red")
+		}
+
+		if (e.key === "ArrowLeft") {
+			setTeam("blue")
+		}
+
+		// Enter do zatwierdzenia wyniku
+		if (e.key === "Enter") {
+			addPointsToTeam()
+		}
+
+		// Space do dodawania błędów
+		if (e.code === "Space") {
+			mistakes++
+
+			// Wybierz odpowiedni kontener na podstawie wybranej druźyny
+			let containerSelector =
+				currentTeam === "blue"
+					? "#left_mistakes img"
+					: "#right_mistakes img"
+			let xs = document.querySelectorAll(containerSelector)
+
+			if (mistakes <= 3) {
+				xs[mistakes - 1].style.opacity = "1"
+			}
+
+			if (mistakes === 3) {
+				document.getElementById("bigX").style.display = "block"
+				// Odtwórz dźwięk wasted tylko raz
+				if (!soundPlayed) {
+					let audio = document.getElementById("wastedSound")
+					audio.currentTime = 0
+					audio.play()
+					soundPlayed = true
+				}
+
+				// Ukryj bigX po 6 sekundach
+				if (bigXTimeout) {
+					clearTimeout(bigXTimeout)
+				}
+				bigXTimeout = setTimeout(() => {
+					document.getElementById("bigX").style.display = "none"
+				}, 6000)
+			}
+		}
+	})
+
+	// Inicjalizuj dostępne punkty na startup
+	loadQuestions()
+</script>

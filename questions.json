@@ -1,0 +1,59 @@
+{
+	"questions": [
+		{
+			"id": 1,
+			"title": "Dokąd nocą tupta jeż?",
+			"answers": [
+				{ "text": "Peter Parking", "points": 43 },
+				{ "text": "Juan Pablo II", "points": 32 },
+				{ "text": "W rozpadlinę", "points": 10 },
+				{ "text": "Na polowanie", "points": 8 },
+				{ "text": "W zabury", "points": 7 }
+			]
+		},
+		{
+			"id": 2,
+			"title": "Co robi panda w ciągu dnia?",
+			"answers": [
+				{ "text": "Zjada bambus", "points": 48 },
+				{ "text": "Śpi", "points": 28 },
+				{ "text": "Bawi się", "points": 15 },
+				{ "text": "Wspina się na drzewo", "points": 6 },
+				{ "text": "Walczy z innymi", "points": 3 }
+			]
+		},
+		{
+			"id": 3,
+			"title": "Jakie są objawy przeziębienia?",
+			"answers": [
+				{ "text": "Kichanie", "points": 35 },
+				{ "text": "NIC", "points": 28 },
+				{ "text": "Ból gardła", "points": 20 },
+				{ "text": "Gorączka", "points": 12 },
+				{ "text": "Bóle mięśni", "points": 5 }
+			]
+		},
+		{
+			"id": 4,
+			"title": "Co Student robi na egzaminie?",
+			"answers": [
+				{ "text": "Pisze odpowiedzi", "points": 42 },
+				{ "text": "Patrzy na test", "points": 31 },
+				{ "text": "Myśli", "points": 15 },
+				{ "text": "Się stresuje", "points": 8 },
+				{ "text": "Patrzy na sąsiada", "points": 4 }
+			]
+		},
+		{
+			"id": 5,
+			"title": "Jakie zwierzęta mieszkają w lesie?",
+			"answers": [
+				{ "text": "Lisy", "points": 40 },
+				{ "text": "Sarny", "points": 30 },
+				{ "text": "Niedźwiedzie", "points": 18 },
+				{ "text": "Wilki", "points": 9 },
+				{ "text": "Borsuki", "points": 3 }
+			]
+		}
+	]
+}
