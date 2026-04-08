@@ -40,32 +40,33 @@ body {
 }
 
 .points {
-	width: 140px;
-	height: 80px;
+	width: 175px;
+	height: 100px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	border-radius: 12px;
-	font-size: 40px;
+	font-size: 50px;
 	font-weight: bold;
-	transition: box-shadow 0.3s ease;
+	transition: box-shadow 0.3s ease, border-width 0.3s ease;
+	border: 3px solid;
 }
 
 /* Niebieska drużyna */
 #blue_team {
-	border: 3px solid #1e90ff;
+	border-color: #1e90ff;
 	color: #1e90ff;
 }
 
 /* Dostępne punkty */
 #avaible_point {
-	border: 3px solid orange;
+	border-color: orange;
 	color: orange;
 }
 
 /* Czerwona drużyna */
 #red_team {
-	border: 3px solid red;
+	border-color: red;
 	color: red;
 }
 
