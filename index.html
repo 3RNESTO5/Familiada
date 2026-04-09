@@ -93,389 +93,233 @@
 		</audio>
 
 		<script>
-			let allQuestions = []
-			let currentQuestionIndex = 0
-			let answers = []
-			let currentTeam = "blue"
+			let allQuestions = [];
+let currentQuestionIndex = 0;
+let answers = [];
+let currentTeam = "blue"; 
+let originalTeam = "blue"; // Drużyna, która zaczęła rundę
+let revealedAnswers = new Set();
+let isTeamBTurn = false; // Czy jesteśmy w fazie przejęcia (szansa dla przeciwników)
 
-			// Pytania osadzone bezpośrednio (bez potrzeby fetch)
-			const questionsData = {
-				"questions": [
-					{
-						"id": 1,
-						"title": "Dokąd nocą tupta jeż?",
-						"answers": [
-							{ "text": "Peter Parking", "points": 43 },
-							{ "text": "Juan Pablo II", "points": 32 },
-							{ "text": "W rozpadlinę", "points": 10 },
-							{ "text": "Na polowanie", "points": 8 },
-							{ "text": "W zabury", "points": 7 }
-						]
-					},
-					{
-						"id": 2,
-						"title": "Co robi panda w ciągu dnia?",
-						"answers": [
-							{ "text": "Zjada bambus", "points": 48 },
-							{ "text": "Śpi", "points": 28 },
-							{ "text": "Bawi się", "points": 15 },
-							{ "text": "Wspina się na drzewo", "points": 6 },
-							{ "text": "Walczy z innymi", "points": 3 }
-						]
-					},
-					{
-						"id": 3,
-						"title": "Jakie są objawy przeziębienia?",
-						"answers": [
-							{ "text": "Kichanie", "points": 35 },
-							{ "text": "NIC", "points": 28 },
-							{ "text": "Ból gardła", "points": 20 },
-							{ "text": "Gorączka", "points": 12 },
-							{ "text": "Bóle mięśni", "points": 5 }
-						]
-					},
-					{
-						"id": 4,
-						"title": "Co Student robi na egzaminie?",
-						"answers": [
-							{ "text": "Pisze odpowiedzi", "points": 42 },
-							{ "text": "Patrzy na test", "points": 31 },
-							{ "text": "Myśli", "points": 15 },
-							{ "text": "Się stresuje", "points": 8 },
-							{ "text": "Patrzy na sąsiada", "points": 4 }
-						]
-					},
-					{
-						"id": 5,
-						"title": "Jakie zwierzęta mieszkają w lesie?",
-						"answers": [
-							{ "text": "Konie", "points": 50 },
-							{ "text": "Wilki", "points": 35 },
-							{ "text": "Jelenie", "points": 20 },
-							{ "text": "Lisy", "points": 10 },
-							{ "text": "Niedźwiedzie", "points": 5 }
-						]
-					}
-				]
-			};
+const questionsData = {
+    "questions": [
+        {
+            "id": 1,
+            "title": "Dokąd nocą tupta jeż?",
+            "answers": [
+                { "text": "Peter Parking", "points": 43 },
+                { "text": "Juan Pablo II", "points": 32 },
+                { "text": "W rozpadlinę", "points": 10 },
+                { "text": "Na polowanie", "points": 8 },
+                { "text": "W zabury", "points": 7 }
+            ]
+        },
+        {
+            "id": 2,
+            "title": "Co robi panda w ciągu dnia?",
+            "answers": [
+                { "text": "Zjada bambus", "points": 48 },
+                { "text": "Śpi", "points": 28 },
+                { "text": "Bawi się", "points": 15 },
+                { "text": "Wspina się na drzewo", "points": 6 },
+                { "text": "Walczy z innymi", "points": 3 }
+            ]
+        }
+        // Dodaj resztę pytań tutaj...
+    ]
+};
 
-			// Załaduj pytania
-			function loadQuestions() {
-				try {
-					allQuestions = questionsData.questions
-					console.log("Pytania wczytane:", allQuestions.length)
+function loadQuestions() {
+    allQuestions = questionsData.questions;
+    loadQuestion(0);
+}
 
-					// Wyświetl pierwsze pytanie
-					loadQuestion(0)
-				} catch (error) {
-					console.error("Błąd wczytywania pytań:", error)
-				}
-			}
+function loadQuestion(index) {
+    if (index >= allQuestions.length) index = 0;
+    currentQuestionIndex = index;
+    const question = allQuestions[index];
 
-			// Załaduj pytanie o danym indeksie
-			function loadQuestion(index) {
-				// Sprawdzenie czy pytania zostały załadowane
-				if (!allQuestions || allQuestions.length === 0) {
-					console.error("Pytania nie zostały załadowane!")
-					return
-				}
+    document.getElementById("main_question").querySelector("h3").innerText = question.title;
+    document.getElementById("main_question").querySelector("h3").style.visibility = "hidden";
+    
+    answers = question.answers;
+    revealedAnswers.clear();
+    isTeamBTurn = false;
+    mistakes = 0;
+    soundPlayed = false;
+    roundEnded = false;
+    roundFinalized = false;
 
-				if (index >= allQuestions.length) {
-					index = 0 // Wróć do początku gdy skończy się lista
-				}
-				currentQuestionIndex = index
-				const question = allQuestions[index]
+    for (let i = 1; i <= 5; i++) {
+        document.getElementById("a" + i).innerText = "............................";
+        document.getElementById("p" + i).innerText = "";
+    }
+    document.getElementById("suma").innerText = "0";
+    
+    // Resetuj Iksy na ekranie
+    document.querySelectorAll(".mistakes img").forEach(img => img.style.opacity = "0");
+    
+    // Resetuj obramowanie i efekty świetlne do stanu początkowego
+    document.getElementById("blue_team").style.boxShadow = "none";
+    document.getElementById("red_team").style.boxShadow = "none";
+    document.getElementById("blue_team").style.border = "3px solid rgba(30, 144, 255, 0.5)";
+    document.getElementById("red_team").style.border = "3px solid rgba(255, 0, 0, 0.5)";
+    document.getElementById("blue_team").style.borderWidth = "3px";
+    document.getElementById("red_team").style.borderWidth = "3px";
+    
+    updateAvailablePoints();
+}
 
-				// Aktualizuj tytuł pytania
-				document.getElementById("main_question").querySelector("h3").innerText =
-					question.title
+function updateAvailablePoints() {
+    let totalPoints = answers.reduce((sum, ans) => sum + ans.points, 0);
+    document.getElementById("avaible_point").querySelector("p").innerText = totalPoints;
+}
 
-				// Ustaw odpowiedzi dla tego pytania
-				answers = question.answers
+function setTeam(team) {
+    if (isTeamBTurn) return; // Nie zmieniaj drużyny strzałkami podczas przejęcia!
+    
+    document.getElementById("blue_team").style.boxShadow = "none";
+    document.getElementById("red_team").style.boxShadow = "none";
+    
+    // Reset both teams to thin border with light color
+    document.getElementById("blue_team").style.border = "3px solid rgba(30, 144, 255, 0.3)";
+    document.getElementById("red_team").style.border = "3px solid rgba(255, 0, 0, 0.3)";
+    document.getElementById("blue_team").style.borderWidth = "3px";
+    document.getElementById("red_team").style.borderWidth = "3px";
 
-				// Resetuj wyświetlane odpowiedzi
-				for (let i = 1; i <= 5; i++) {
-					document.getElementById("a" + i).innerText = "............."
-					document.getElementById("p" + i).innerText = ""
-				}
-				document.getElementById("suma").innerText = "0"
-				document
-					.getElementById("main_question")
-					.querySelector("h3").style.visibility = "hidden"
+    if (team === "blue") {
+        document.getElementById("blue_team").style.boxShadow = "0 0 25px #1e90ff";
+        document.getElementById("blue_team").style.border = "3px solid #1e90ff";
+        document.getElementById("blue_team").style.borderWidth = "7.5px";
+    } else {
+        document.getElementById("red_team").style.boxShadow = "0 0 25px red";
+        document.getElementById("red_team").style.border = "3px solid red";
+        document.getElementById("red_team").style.borderWidth = "7.5px";
+    }
+    currentTeam = team;
+    originalTeam = team; // Zapamiętujemy, kto zaczął grać to pytanie
+}
 
-				// Zaktualizuj dostępne punkty
-				updateAvailablePoints()
-			}
+function reveal(n) {
+    if (!answers[n - 1] || revealedAnswers.has(n)) return;
 
-			function reveal(n) {
-				// Sprawdzenie czy pytania zostały załadowane
-				if (!answers || answers.length === 0) {
-					console.error("Odpowiedzi nie zostały załadowane!")
-					return
-				}
+    // Przy pierwszej poprawnej odpowiedzi pokazujemy pytanie
+    document.getElementById("main_question").querySelector("h3").style.visibility = "visible";
 
-				if (!answers[n - 1]) {
-					console.error("Odpowiedź nr " + n + " nie istnieje!")
-					return
-				}
+    const answerElement = document.getElementById("a" + n);
+    answerElement.innerHTML = `<span class="reveal-animation">${answers[n - 1].text}</span>`;
+    document.getElementById("p" + n).innerText = answers[n - 1].points;
+    revealedAnswers.add(n);
 
-				// Pokaż tylko nagłówek (h3) przy pierwszej odpowiedzi
-				document
-					.getElementById("main_question")
-					.querySelector("h3").style.visibility = "visible"
+    // Only update suma if round is not finalized
+    if (!roundFinalized) {
+        let suma = 0;
+        for (let i = 1; i <= 5; i++) {
+            let p = document.getElementById("p" + i).innerText;
+            if (p !== "") suma += parseInt(p);
+        }
+        document.getElementById("suma").innerText = suma;
+    }
+    
+    // Sprawdź czy wszystkie 5 odpowiedzi zostały odkryte
+    // Check if all 5 answers revealed - require Enter to finish
+    if (revealedAnswers.size === 5 && !isTeamBTurn && !roundFinalized) {
+        console.log("Wszystkie odpowiedzi odkryte! Naciśnij Enter by przejść do następnego pytania.");
+    }
+}
 
-				// Animowane ujawnianie odpowiedzi
-				const answerElement = document.getElementById("a" + n)
-				const answerText = answers[n - 1].text
-				
-				// Wyczyść poprzedni tekst
-				answerElement.innerHTML = ""
-				
-				// Dodaj tekst z animacją
-				const span = document.createElement("span")
-				span.className = "reveal-animation"
-				span.textContent = answerText
-				answerElement.appendChild(span)
+function endRound(winner) {
+    let suma = parseInt(document.getElementById("suma").innerText);
+    let scoreElement = document.querySelector(`#${winner}_team p`);
+    scoreElement.innerText = parseInt(scoreElement.innerText) + suma;
+    console.log("Naciśnij Enter by przejść do następnego pytania.");
+    roundFinalized = true;
+}
 
-				// Dodaj punkty
-				document.getElementById("p" + n).innerText = answers[n - 1].points
+let mistakes = 0;
+let soundPlayed = false;
+let roundEnded = false;
+let roundFinalized = false;
 
-				// Oblicz sumę wszystkich odsłoniętych odpowiedzi
-				let suma = 0
-				for (let i = 1; i <= 5; i++) {
-					let pointsElement = document.getElementById("p" + i)
-					if (pointsElement.innerText !== "") {
-						suma += parseInt(pointsElement.innerText)
-					}
-				}
-				document.getElementById("suma").innerText = suma
-			}
+document.addEventListener("keydown", function (e) {
+    // 0. Przejście do następnego pytania (Enter)
+    if (e.key === "Enter") {
+        if (roundEnded) {
+            roundEnded = false;
+            roundFinalized = false;
+            loadQuestion(currentQuestionIndex + 1);
+        } else if (revealedAnswers.size === 5 && !isTeamBTurn && !roundFinalized) {
+            // All 5 answers revealed - award points to original team
+            endRound(originalTeam);
+            roundEnded = false;
+            loadQuestion(currentQuestionIndex + 1);
+        }
+        return;
+    }
+    
+    // 1. Wybór drużyny (tylko przed przejęciem)
+    if (e.key === "ArrowLeft") setTeam("blue");
+    if (e.key === "ArrowRight") setTeam("red");
 
-			function updateAvailablePoints() {
-				// Oblicz sumę wszystkich dostępnych punktów do zdobycia
-				let totalPoints = 0
-				for (let i = 0; i < answers.length; i++) {
-					totalPoints += answers[i].points
-				}
-				document.getElementById("avaible_point").querySelector("p").innerText =
-					totalPoints
-			}
+    // 2. Odsłanianie odpowiedzi
+    if (e.key >= "1" && e.key <= "5") {
+        let n = parseInt(e.key);
+        
+        if (!isTeamBTurn) {
+            reveal(n);
+        } else if (!roundFinalized) {
+            // Logika przejęcia: Drużyna B trafia -> wygrywa całość
+            reveal(n);
+            endRound(currentTeam);
+            roundEnded = true;
+        } else {
+            // Round already finalized, still allow reveal but no endRound
+            reveal(n);
+        }
+    }
 
-			let mistakes = 0
-			let soundPlayed = false
-			let bigXTimeout = null
-			let isSecondChance = false
-			let originalTeam = "blue"
+    // 3. Błędy (Spacja)
+    if (e.code === "Space") {
+        e.preventDefault();
+        
+        if (!isTeamBTurn) {
+            // Drużyna A się myli
+            mistakes++;
+            let side = originalTeam === "blue" ? "left" : "right";
+            let xs = document.querySelectorAll(`#${side}_mistakes img`);
+            if (mistakes <= 3) xs[mistakes - 1].style.opacity = "1";
 
-			function switchTeam() {
-				// Przełącz na drugą drużynę
-				const newTeam = currentTeam === "blue" ? "red" : "blue"
-				setTeam(newTeam)
-				isSecondChance = true
-				mistakes = 0
-				soundPlayed = false
-				console.log("Druga szansa dla drużyny:", newTeam)
-			}
+            if (mistakes === 3) {
+                playWasted();
+                isTeamBTurn = true;
+                // Automatycznie przełączamy podświetlenie na przeciwników
+                currentTeam = (originalTeam === "blue" ? "red" : "blue");
+                document.getElementById("blue_team").style.boxShadow = currentTeam === "blue" ? "0 0 25px #1e90ff" : "none";
+                document.getElementById("red_team").style.boxShadow = currentTeam === "red" ? "0 0 25px red" : "none";
+                document.getElementById("blue_team").style.borderWidth = currentTeam === "blue" ? "7.5px" : "3px";
+                document.getElementById("red_team").style.borderWidth = currentTeam === "red" ? "7.5px" : "3px";
+                document.getElementById("blue_team").style.borderColor = currentTeam === "blue" ? "#1e90ff" : "rgba(30, 144, 255, 0.3)";
+                document.getElementById("red_team").style.borderColor = currentTeam === "red" ? "red" : "rgba(255, 0, 0, 0.3)";
+            }
+        } else {
+            // Drużyna B się myli podczas przejęcia -> Oryginalna drużyna zgarnia punkty
+            playWasted();
+            endRound(originalTeam);
+            roundEnded = true;
+        }
+    }
+});
 
-			function setTeam(team) {
-				document.getElementById("blue_team").style.boxShadow = "none"
-				document.getElementById("red_team").style.boxShadow = "none"
-				document.getElementById("blue_team").style.borderWidth = "3px"
-				document.getElementById("red_team").style.borderWidth = "3px"
+function playWasted() {
+    let bigX = document.getElementById("bigX");
+    bigX.style.display = "block";
+    let audio = document.getElementById("wastedSound");
+    audio.currentTime = 0;
+    audio.play();
+    setTimeout(() => { bigX.style.display = "none"; }, 3000);
+}
 
-				if (team === "blue") {
-					document.getElementById("blue_team").style.boxShadow =
-						"0 0 20px rgba(30, 144, 255, 0.6), inset 0 0 20px rgba(30, 144, 255, 0.2)"
-					document.getElementById("blue_team").style.borderWidth = "7.5px"
-				}
-
-				if (team === "red") {
-					document.getElementById("red_team").style.boxShadow = 
-						"0 0 20px rgba(255, 0, 0, 0.6), inset 0 0 20px rgba(255, 0, 0, 0.2)"
-					document.getElementById("red_team").style.borderWidth = "7.5px"
-				}
-
-				currentTeam = team
-			}
-
-			function addPointsToTeam() {
-				// Sprawdzenie czy pytania zostały załadowane
-				if (!allQuestions || allQuestions.length === 0) {
-					console.error("Pytania nie zostały załadowane!")
-					return
-				}
-
-				let suma = parseInt(document.getElementById("suma").innerText)
-				let teamElement = document.getElementById(currentTeam + "_team")
-				let currentPoints = parseInt(teamElement.querySelector("p").innerText)
-
-				// Jeśli to pierwsza szansa i drużyna odpowiadała poprawnie
-				if (!isSecondChance) {
-					teamElement.querySelector("p").innerText = currentPoints + suma
-				} else if (isSecondChance) {
-					// Jeśli to druga szansa i drużyna odpowiadała poprawnie
-					teamElement.querySelector("p").innerText = currentPoints + suma
-					console.log("Druga szansa - drużyna", currentTeam, "dostała", suma, "punktów")
-				}
-
-				// Załaduj następne pytanie
-				loadQuestion(currentQuestionIndex + 1)
-
-				// Resetuj błędy i zmienne
-				mistakes = 0
-				isSecondChance = false
-				originalTeam = currentTeam
-				soundPlayed = false
-				if (bigXTimeout) {
-					clearTimeout(bigXTimeout)
-				}
-				document.getElementById("bigX").style.display = "none"
-				let leftXs = document.querySelectorAll("#left_mistakes img")
-				let rightXs = document.querySelectorAll("#right_mistakes img")
-				leftXs.forEach((x) => (x.style.opacity = "0"))
-				rightXs.forEach((x) => (x.style.opacity = "0"))
-			}
-
-			function skipToNextQuestion() {
-				// Nikt nie dostał punktów - przejdź do następnego pytania
-				console.log("Nikt nie dostał punktów w tej rundzie")
-				
-				// Załaduj następne pytanie
-				loadQuestion(currentQuestionIndex + 1)
-
-				// Resetuj błędy i zmienne
-				mistakes = 0
-				isSecondChance = false
-				originalTeam = currentTeam
-				soundPlayed = false
-				if (bigXTimeout) {
-					clearTimeout(bigXTimeout)
-				}
-				document.getElementById("bigX").style.display = "none"
-				let leftXs = document.querySelectorAll("#left_mistakes img")
-				let rightXs = document.querySelectorAll("#right_mistakes img")
-				leftXs.forEach((x) => (x.style.opacity = "0"))
-				rightXs.forEach((x) => (x.style.opacity = "0"))
-			}
-
-			document.addEventListener("keydown", function (e) {
-				// Klawisze 1-5 do odsłaniania odpowiedzi
-				if (e.key >= "1" && e.key <= "5") {
-					reveal(parseInt(e.key))
-				}
-
-				// Strzałki do wyboru drużyny
-				if (e.key === "ArrowRight") {
-					setTeam("red")
-				}
-
-				if (e.key === "ArrowLeft") {
-					setTeam("blue")
-				}
-
-				// Enter do zatwierdzenia wyniku
-				if (e.key === "Enter") {
-					// Sprawdzenie czy cokolwiek odkryto
-					let hasAnswers = false
-					for (let i = 1; i <= 5; i++) {
-						let answerElement = document.getElementById("a" + i)
-						if (answerElement.innerText !== "..........................") {
-							hasAnswers = true
-							break
-						}
-					}
-
-					if (!hasAnswers) {
-						console.error("Musisz odkryć przynajmniej jedną odpowiedź!")
-						return
-					}
-
-					// Jeśli druga szansa i trzecie błędy - nikt nie dostaje punktów
-					if (isSecondChance && mistakes >= 3) {
-						skipToNextQuestion()
-					} else if (!isSecondChance && mistakes >= 3) {
-						alert("Druga szansa dla drugiej drużyny!")
-						// Druga szansa już rozpoczęła się w handleru Space
-					} else {
-						// Normalne zatwierdzenie - drużyna dostaje punkty
-						addPointsToTeam()
-					}
-				}
-
-				// Space do dodawania błędów
-				if (e.code === "Space") {
-					e.preventDefault() // Zapobiegaj scrollowaniu strony
-					mistakes++
-
-					// Wybierz odpowiedni kontener na podstawie wybranej druźyny
-					let containerSelector =
-						currentTeam === "blue"
-							? "#left_mistakes img"
-							: "#right_mistakes img"
-					let xs = document.querySelectorAll(containerSelector)
-
-					// Druga szansa - każdy błąd to koniec
-					if (isSecondChance && mistakes >= 1) {
-						document.getElementById("bigX").style.display = "block"
-						xs[0].style.opacity = "1" // Pokaż X
-						// Odtwórz dźwięk wasted tylko raz
-						if (!soundPlayed) {
-							let audio = document.getElementById("wastedSound")
-							audio.currentTime = 0
-							audio.play()
-							soundPlayed = true
-						}
-
-						// Ukryj bigX po 6 sekundach
-						if (bigXTimeout) {
-							clearTimeout(bigXTimeout)
-						}
-						bigXTimeout = setTimeout(() => {
-							document.getElementById("bigX").style.display = "none"
-						}, 6000)
-
-						console.log("Druga drużyna straciła na pierwszym błędzie - przechodzenie do następnego pytania")
-						setTimeout(() => {
-							skipToNextQuestion()
-						}, 2000) // Czekaj 2 sekundy na animację
-						return
-					}
-
-					// Pierwsza szansa - potrzeba 3 błędów
-					if (mistakes <= 3) {
-						xs[mistakes - 1].style.opacity = "1"
-					}
-
-					if (mistakes === 3 && !isSecondChance) {
-						document.getElementById("bigX").style.display = "block"
-						// Odtwórz dźwięk wasted tylko raz
-						if (!soundPlayed) {
-							let audio = document.getElementById("wastedSound")
-							audio.currentTime = 0
-							audio.play()
-							soundPlayed = true
-						}
-
-						// Ukryj bigX po 6 sekundach
-						if (bigXTimeout) {
-							clearTimeout(bigXTimeout)
-						}
-						bigXTimeout = setTimeout(() => {
-							document.getElementById("bigX").style.display = "none"
-						}, 6000)
-
-						// AUTOMATYCZNE PRZEŁĄCZENIE DRUŻYNY
-						// Ustaw timeout, aby przełączyć drużynę
-						setTimeout(() => {
-							switchTeam()
-							console.log("Automatyczne przełączenie na drugą drużynę")
-						}, 2000) // Czekaj 2 sekundy przed przełączeniem
-					}
-				}
-			})
-
-			// Inicjalizuj dostępne punkty na startup
-			loadQuestions()
+loadQuestions();
 		</script>
 	</body>
 </html>

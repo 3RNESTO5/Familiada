@@ -150,3 +150,12 @@ body {
 	font-size: 32px;
 	text-align: right;
 }
+.active-blue {
+    box-shadow: 0 0 25px #1e90ff !important;
+    outline: 5px solid #1e90ff; /* outline nie zajmuje miejsca, więc nie przesunie boxów */
+}
+
+.active-red {
+    box-shadow: 0 0 25px red !important;
+    outline: 5px solid red;
+}
