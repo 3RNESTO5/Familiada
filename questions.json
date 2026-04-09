@@ -1,0 +1,507 @@
+{
+	"questions": [
+		{
+			"id": 1,
+			"title": "1. Co student mówi po zobaczeniu wyników egzaminu?",
+			"answers": [
+				{ "text": "Wulgaryzmy", "points": 40 },
+				{ "text": "Udało się / ważne, że zdane", "points": 25 },
+				{ "text": "Poprawka / rezygnacja", "points": 15 },
+				{ "text": "Szok i ulga", "points": 12 },
+				{ "text": "Świętowanie", "points": 8 }
+			]
+		},
+		{
+			"id": 2,
+			"title": "2. Wymarzony zawód studenta UEP to...?",
+			"answers": [
+				{ "text": "Bezrobotny", "points": 33 },
+				{ "text": "Biznesmen/Przedsiębiorca", "points": 25 },
+				{ "text": "Pracownik fast foodu", "points": 21 },
+				{ "text": "Ekspert od finansów/Ekonomista", "points": 14 },
+				{ "text": "Dobrze płatny i stabilny", "points": 7 }
+			]
+		},
+		{
+			"id": 3,
+			"title": "3. Na co studenci wydają najczęściej pieniądze?",
+			"answers": [
+				{ "text": "Alkohol i imprezy", "points": 48 },
+				{ "text": "Jedzenie i fast foody", "points": 28 },
+				{ "text": "Energetyki", "points": 10 },
+				{ "text": "Kawa", "points": 8 },
+				{ "text": "Inne używki (palenie)", "points": 6 }
+			]
+		},
+		{
+			"id": 4,
+			"title": "4. Najgorsza galeria w Poznaniu to...?",
+			"answers": [
+				{ "text": "Posnania", "points": 34 },
+				{ "text": "Avenida", "points": 22 },
+				{ "text": "Galeria MM", "points": 20 },
+				{ "text": "Pestka", "points": 13 },
+				{ "text": "King Cross", "points": 11 }
+			]
+		},
+		{
+			"id": 5,
+			"title": "5. Na jakiego kebaba idzie student po imprezie?",
+			"answers": [
+				{ "text": "Zahir Kebab", "points": 50 },
+				{
+					"text": "Tam, gdzie jest otwarte",
+					"points": 15
+				},
+				{ "text": "Stodoła", "points": 15 },
+				{ "text": "Tendur", "points": 11 },
+				{ "text": "Najtańszego", "points": 9 }
+			]
+		},
+		{
+			"id": 6,
+			"title": "6. Co student woli robić zamiast iść na wykład?",
+			"answers": [
+				{ "text": "Cokolwiek / Wszystko inne", "points": 30 },
+				{ "text": "Iść nad Wartę", "points": 22 },
+				{
+					"text": "Zrobić sobie krzywdę",
+					"points": 18
+				},
+				{ "text": "Spać", "points": 16 },
+				{ "text": "Iść na piwo", "points": 14 }
+			]
+		},
+		{
+			"id": 7,
+			"title": "7. Co najbardziej kojarzy się z UEP?",
+			"answers": [
+				{ "text": "Kolor zielony", "points": 46 },
+				{ "text": "Collegium Altum ", "points": 23 },
+				{ "text": "Wolne piątki i dobry plan", "points": 13 },
+				{ "text": "Wykładowca Jacek Jankiewicz", "points": 11 },
+				{ "text": "Trudne przedmioty", "points": 7 }
+			]
+		},
+		{
+			"id": 8,
+			"title": "8. Na czym najczęściej oszczędza student?",
+			"answers": [
+				{ "text": "Jedzenie / Dieta", "points": 60 },
+				{ "text": "Materiały do nauki / Książki", "points": 15 },
+				{ "text": "Komunikacja miejska / Bilety", "points": 12 },
+				{ "text": "Własne zdrowie", "points": 8 },
+				{ "text": "Czas i wysiłek na uczelni", "points": 5 }
+			]
+		},
+		{
+			"id": 9,
+			"title": "9. Typowy obiad studenta to...?",
+			"answers": [
+				{ "text": "Makaron ", "points": 27 },
+				{ "text": "Zupka chińska", "points": 25 },
+				{ "text": "Piwo/kawa/papieros", "points": 20 },
+				{ "text": "Hot dog z Żabki i gotowce", "points": 18 },
+				{ "text": "Dary z rodzinnego domu (Słoiki)", "points": 10 }
+			]
+		},
+		{
+			"id": 10,
+			"title": "10. Na co studenci najczęściej narzekają?",
+			"answers": [
+				{ "text": "Okienka i kiepski plan zajęć", "points": 26 },
+				{
+					"text": "infrastruktura i logistyka UEP",
+					"points": 24
+				},
+				{ "text": "Trudne przedmioty i sesja", "points": 20 },
+				{ "text": "Wykładowcy", "points": 17 },
+				{ "text": "Na wszystko i na życie", "points": 13 }
+			]
+		},
+		{
+			"id": 11,
+			"title": "11. Najgorsza dzielnica Poznania to...?",
+			"answers": [
+				{ "text": "Dębiec", "points": 36 },
+				{ "text": "Wilda", "points": 22 },
+				{ "text": "Łazarz", "points": 16 },
+				{ "text": "Górczyn", "points": 14 },
+				{ "text": "Jeżyce", "points": 12 }
+			]
+		},
+		{
+			"id": 12,
+			"title": "12. Z czym rymuje się “wykład”?",
+			"answers": [
+				{ "text": "Przykład", "points": 38 },
+				{ "text": "Zakład", "points": 28 },
+				{ "text": "Z niczym", "points": 20 },
+				{ "text": "Chodź na piwo", "points": 14 }
+			]
+		},
+		{
+			"id": 13,
+			"title": "13. Na jakie eventy warto czekać w Poznaniu?",
+			"answers": [
+				{ "text": "Pyrkon", "points": 30 },
+				{ "text": "Juwenalia", "points": 25 },
+				{
+					"text": "Koncerty i festiwale ",
+					"points": 21
+				},
+				{ "text": "Familiada (SKN Pryzmat)", "points": 16 },
+				{ "text": "PGA ", "points": 8 }
+			]
+		},
+		{
+			"id": 14,
+			"title": "14. Jaki budynek UEP jest najgorszy?",
+			"answers": [
+				{ "text": "Altum", "points": 30 },
+				{ "text": "Budynek B", "points": 26 },
+				{ "text": "Budynek A", "points": 22 },
+				{ "text": "Budynek E / językowy", "points": 14 },
+				{ "text": "Budynek C", "points": 8 }
+			]
+		},
+		{
+			"id": 15,
+			"title": "15. Gdzie na uczelni najłatwiej spotkać znajomych?",
+			"answers": [
+				{ "text": "Przed uczelnią / Dziedziniec", "points": 38 },
+				{ "text": "Palarnia / Na dymku", "points": 22 },
+				{ "text": "Korytarze, przejścia i toalety", "points": 15 },
+				{ "text": "Strefy relaksu i kanapy", "points": 13 },
+				{ "text": "Na zajęciach", "points": 12 }
+			]
+		},
+		{
+			"id": 16,
+			"title": "16. W jakiej dzielnicy Poznania mieszka najwięcej studentów?",
+			"answers": [
+				{ "text": "Rataje", "points": 28 },
+				{ "text": "Winogrady", "points": 22 },
+				{ "text": "Jeżyce", "points": 19 },
+				{ "text": "Wilda", "points": 16 },
+				{ "text": "Piątkowo", "points": 15 }
+			]
+		},
+		{
+			"id": 17,
+			"title": "17. Co student robi w telefonie podczas wykładu?",
+			"answers": [
+				{ "text": "Gra w gry", "points": 43 },
+				{ "text": "Ogląda TikToka i Reelsy", "points": 33 },
+				{
+					"text": "Załatwia życiowe \"biznesy\" ",
+					"points": 10
+				},
+				{ "text": "Pisze ze znajomymi", "points": 8 },
+				{
+					"text": "Robi notatki ",
+					"points": 6
+				}
+			]
+		},
+		{
+			"id": 18,
+			"title": "18. Gdzie student znajdzie najlepsze zniżki?",
+			"answers": [
+				{ "text": "Restauracje i jedzenie", "points": 35 },
+				{ "text": "Bary i puby", "points": 25 },
+				{ "text": "Brak wiedzy / \"Nie wiem\"", "points": 18 },
+				{ "text": "Transport i komunikacja", "points": 12 },
+				{ "text": "Aplikacja Uniperks", "points": 10 }
+			]
+		},
+		{
+			"id": 19,
+			"title": "19. Gdzie w Poznaniu wypijesz najtańsze piwo?",
+			"answers": [
+				{ "text": "Bar Pomidor", "points": 30 },
+				{ "text": "Prywatka", "points": 25 },
+				{
+					"text": "W Plenerze ",
+					"points": 20
+				},
+				{ "text": "Kultowa", "points": 15 },
+				{ "text": "Academic Pub", "points": 10 }
+			]
+		},
+		{
+			"id": 20,
+			"title": "20. W jakie gry najczęściej grają ekonomiści?",
+			"answers": [
+				{ "text": "Monopoly ", "points": 28 },
+				{ "text": "Poker i gry karciane", "points": 24 },
+				{ "text": "Giełda i inwestycje", "points": 20 },
+				{ "text": "Hazard", "points": 16 },
+				{ "text": "Gry logiczne i strategiczne", "points": 12 }
+			]
+		},
+		{
+			"id": 21,
+			"title": "21. Dokończ zdanie: UEP jest...",
+			"answers": [
+				{
+					"text": "Najlepszą uczelnią w Polsce ",
+					"points": 32
+				},
+				{ "text": "Wspaniały", "points": 26 },
+				{ "text": "Super / Spoko / Mega", "points": 22 },
+				{ "text": "Rozczarowujący ", "points": 12 },
+				{ "text": "Po prostu uczelnią ", "points": 8 }
+			]
+		},
+		{
+			"id": 22,
+			"title": "22. Gdzie student idzie w czwartek wieczorem?",
+			"answers": [
+				{ "text": "Do klubu / Na imprezę", "points": 36 },
+				{ "text": "Na Wrocławską", "points": 24 },
+				{ "text": "Do baru", "points": 22 },
+				{ "text": "Do domu / Spać", "points": 10 },
+				{ "text": "Nad Wartę", "points": 8 }
+			]
+		},
+		{
+			"id": 23,
+			"title": "23. Co można znaleźć w torbie studenta?",
+			"answers": [
+				{ "text": "Sprzęt elektroniczny", "points": 30 },
+				{ "text": "Wyroby tytoniowe i e-papierosy", "points": 26 },
+				{ "text": "Napoje energetyczne", "points": 22 },
+				{ "text": "Alkohol", "points": 13 },
+				{ "text": "Drobiazgi ratujące życie", "points": 9 }
+			]
+		},
+		{
+			"id": 24,
+			"title": "24. Najlepsza dzielnica w Poznaniu",
+			"answers": [
+				{ "text": "Stare Miasto / Centrum", "points": 40 },
+				{ "text": "Jeżyce", "points": 20 },
+				{ "text": "Winogrady", "points": 15 },
+				{ "text": "Rataje", "points": 13 },
+				{ "text": "Wilda", "points": 12 }
+			]
+		},
+		{
+			"id": 25,
+			"title": "25. Gdzie student najczęściej leci na wakacje?",
+			"answers": [
+				{ "text": "Do domu / Do rodziców", "points": 42 },
+				{ "text": "Włochy i Hiszpania", "points": 22 },
+				{ "text": "Do pracy / Do roboty", "points": 15 },
+				{ "text": "Tam, gdzie najtaniej", "points": 12 },
+				{ "text": "Nad polskie morze / Jezioro", "points": 9 }
+			]
+		},
+		{
+			"id": 26,
+			"title": "26. Na jaki wykład student wstanie rano bez zastanowienia?",
+			"answers": [
+				{ "text": "Na żaden / Nie ma takiego", "points": 25 },
+				{ "text": "PR ", "points": 22 },
+				{ "text": "Mikroekonomia", "points": 20 },
+				{ "text": "Obowiązkowy / Z listą obecności", "points": 18 },
+				{ "text": "Matematyka", "points": 15 }
+			]
+		},
+		{
+			"id": 27,
+			"title": "27. Jakie jest ulubione piwo studenta?",
+			"answers": [
+				{ "text": "Tanie ", "points": 52 },
+				{ "text": "Zimne", "points": 18 },
+				{ "text": "Smakowe", "points": 15 },
+				{ "text": "Darmowe", "points": 10 },
+				{ "text": "Kolejne", "points": 5 }
+			]
+		},
+		{
+			"id": 28,
+			"title": "28. Gdzie można spotkać wykładowcę w weekend?",
+			"answers": [
+				{ "text": "W barze / Na piwie / W klubie", "points": 35 },
+				{ "text": "W restauracji", "points": 20 },
+				{ "text": "W galerii handlowej", "points": 18 },
+				{ "text": "W komunikacji miejskiej", "points": 14 },
+				{ "text": "Na uczelni (na zaocznych)", "points": 13 }
+			]
+		},
+		{
+			"id": 29,
+			"title": "29. Co robi student dzień przed egzaminem, żeby się nie uczyć?",
+			"answers": [
+				{ "text": "Sprząta ", "points": 48 },
+				{ "text": "Pije / Imprezuje", "points": 20 },
+				{ "text": "Scrolluje telefon / Gra w gry", "points": 14 },
+				{ "text": "Śpi ", "points": 10 },
+				{ "text": "Modli się", "points": 8 }
+			]
+		},
+		{
+			"id": 30,
+			"title": "30. Za co powstał taras widokowy w Altum?",
+			"answers": [
+				{ "text": "Za warunki z mikroekonomii", "points": 55 },
+				{ "text": "Za pieniądze podatników", "points": 20 },
+				{ "text": "Za niewinność", "points": 12 },
+				{ "text": "Za hajs uczelni", "points": 8 },
+				{
+					"text": "Za czesne studentów zaocznych ",
+					"points": 5
+				}
+			]
+		},
+		{
+			"id": 31,
+			"title": "31. Na jakich wykładach śpi najwięcej studentów?",
+			"answers": [
+				{ "text": "Porannych", "points": 34 },
+				{ "text": "Nudnych ", "points": 24 },
+				{ "text": "Historia gospodarcza", "points": 18 },
+				{ "text": "Mikroekonomia", "points": 13 },
+				{ "text": "Prawo", "points": 11 }
+			]
+		},
+		{
+			"id": 32,
+			"title": "32. Po czym poznać prawdziwego poznaniaka?",
+			"answers": [
+				{
+					"text": "Używa gwary ",
+					"points": 39
+				},
+				{ "text": "Miłość do pyr z gzikiem i rogali", "points": 25 },
+				{ "text": "Skąpstwo / oszczędność", "points": 24 },
+				{ "text": "Lojalność kibica (Kolejorz)", "points": 7 },
+				{ "text": "Specyficzne zachowanie i atrybuty", "points": 5 }
+			]
+		},
+		{
+			"id": 33,
+			"title": "33. Co się najczęściej psuje na UEP?",
+			"answers": [
+				{ "text": "Windy (zwłaszcza te w Altum)", "points": 42 },
+				{ "text": "Zdrowie psychiczne i wola życia", "points": 25 },
+				{
+					"text": "Sprzęt multimedialny ",
+					"points": 13
+				},
+				{ "text": "Drzwi wejściowe i do sal", "points": 12 },
+				{ "text": "Automaty z jedzeniem i piciem", "points": 8 }
+			]
+		},
+		{
+			"id": 34,
+			"title": "34. Skąd studenci najczęściej biorą pieniądze?",
+			"answers": [
+				{ "text": "Rodzice i rodzina", "points": 50 },
+				{ "text": "Pożyczki ", "points": 20 },
+				{ "text": "Stypendium", "points": 14 },
+				{ "text": "Hazard i inwestycje", "points": 10 },
+				{ "text": "Praca", "points": 6 }
+			]
+		},
+		{
+			"id": 35,
+			"title": "35. Gdzie student UEP kończy imprezę?",
+			"answers": [
+				{ "text": "W klubie lub barze", "points": 30 },
+				{ "text": "Na kebabie", "points": 28 },
+				{ "text": "W plenerze (rów, krzaki, chodnik)", "points": 20 },
+				{ "text": "W McDonaldzie", "points": 12 },
+				{ "text": "W domu ", "points": 10 }
+			]
+		},
+		{
+			"id": 36,
+			"title": "36. Najczęstszy powód nieobecności na zajęciach to...",
+			"answers": [
+				{ "text": "Zaspanie ", "points": 38 },
+				{ "text": "Kac i skutki imprezy", "points": 28 },
+				{ "text": "Lenistwo i brak chęci", "points": 18 },
+				{ "text": "Choroba i złe samopoczucie", "points": 10 },
+				{ "text": "Wydarzenia losowe ", "points": 6 }
+			]
+		},
+		{
+			"id": 37,
+			"title": "37. Najgorszy przedmiot na UEP według studentów",
+			"answers": [
+				{ "text": "Mikroekonomia ", "points": 40 },
+				{ "text": "Matematyka", "points": 25 },
+				{ "text": "Makroekonomia", "points": 15 },
+				{ "text": "Zarządzanie / Przedsiębiorstwo", "points": 12 },
+				{
+					"text": "Historia gospodarcza ",
+					"points": 8
+				}
+			]
+		},
+		{
+			"id": 38,
+			"title": "38. Czego student UEP NIE słyszy od rodziców?",
+			"answers": [
+				{ "text": "„Jesteśmy z Ciebie dumni”", "points": 45 },
+				{ "text": "„Kocham Cię ”", "points": 18 },
+				{
+					"text": "„Za dużo się uczysz ”",
+					"points": 15
+				},
+				{
+					"text": "Pytania o samopoczucie ",
+					"points": 12
+				},
+				{ "text": "Pochwały i uznanie mądrości", "points": 10 }
+			]
+		},
+		{
+			"id": 39,
+			"title": "39. Gdzie student idzie, żeby tanio zjeść w Poznaniu?",
+			"answers": [
+				{ "text": "Piccolo", "points": 48 },
+				{ "text": "Żabka", "points": 18 },
+				{ "text": "Biedronka", "points": 14 },
+				{ "text": "Rodzice ", "points": 11 },
+				{ "text": "McDonald’s", "points": 9 }
+			]
+		},
+		{
+			"id": 40,
+			"title": "40. Ulubiony fastfood studenta to...",
+			"answers": [
+				{ "text": "McDonald’s", "points": 46 },
+				{ "text": "Kebab", "points": 22 },
+				{ "text": "Pasibus", "points": 14 },
+				{ "text": "Hot dog / przekąski z Żabki", "points": 10 },
+				{ "text": "Piccolo", "points": 8 }
+			]
+		},
+		{
+			"id": 41,
+			"title": "41. Co studenci UEP najczęściej wybierają na WF?",
+			"answers": [
+				{ "text": "Siłownia", "points": 52 },
+				{ "text": "Body and Mind", "points": 22 },
+				{ "text": "Nordic walking ", "points": 12 },
+				{ "text": "Sporty zespołowe", "points": 8 },
+				{ "text": "Basen ", "points": 6 }
+			]
+		},
+		{
+			"id": 42,
+			"title": "42. Jakie słowo najbardziej przeraża studenta?",
+			"answers": [
+				{ "text": "Sesja", "points": 35 },
+				{ "text": "Egzamin / Kolokwium", "points": 25 },
+				{ "text": "Wejściówka / „Wyciągnijcie kartki”", "points": 20 },
+				{ "text": "Mikroekonomia", "points": 12 },
+				{ "text": "Poprawka / Warunek", "points": 8 }
+			]
+		}
+	]
+}

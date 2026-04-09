@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="pl">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="style.css" />
+		<title>Familiada kół naukowych</title>
+		<style>
+			@import url("https://fonts.googleapis.com/css2?family=Bitcount+Single&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+
+			@keyframes slideIn {
+				from {
+					width: 0;
+					opacity: 0;
+				}
+				to {
+					width: 100%;
+					opacity: 1;
+				}
+			}
+
+			.reveal-animation {
+				display: inline-block;
+				animation: slideIn 0.6s ease-out;
+				overflow: hidden;
+				white-space: nowrap;
+			}
+
+			#main_question h3 {
+				font-family: "Open Sans", sans-serif;
+			}
+
+			#main_question ol li {
+				font-family: "Open Sans", sans-serif;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="upper_points">
+			<div class="points" id="blue_team">
+				<p>0</p>
+			</div>
+			<div class="points" id="avaible_point">
+				<p>100</p>
+			</div>
+			<div class="points" id="red_team">
+				<p>0</p>
+			</div>
+		</div>
+		<div id="lower_part">
+			<div class="mistakes" id="left_mistakes">
+				<img src="X — kopia_bez_tla.png" alt="RED_X" />
+				<img src="X — kopia_bez_tla.png" alt="RED_X" />
+				<img src="X — kopia_bez_tla.png" alt="RED_X" />
+			</div>
+			<div id="main_question">
+				<h3>Dokąd nocą tupta jeż?</h3>
+				<ol>
+					<li>
+						<span id="a1">............................</span>
+						<span id="p1"></span>
+					</li>
+					<li>
+						<span id="a2">............................</span>
+						<span id="p2"></span>
+					</li>
+					<li>
+						<span id="a3">............................</span>
+						<span id="p3"></span>
+					</li>
+					<li>
+						<span id="a4">............................</span>
+						<span id="p4"></span>
+					</li>
+					<li>
+						<span id="a5">............................</span>
+						<span id="p5"></span>
+					</li>
+				</ol>
+				<p>Suma <span id="suma">0</span></p>
+			</div>
+			<div class="mistakes" id="right_mistakes">
+				<img src="X — kopia_bez_tla.png" alt="RED_X" />
+				<img src="X — kopia_bez_tla.png" alt="RED_X" />
+				<img src="X — kopia_bez_tla.png" alt="RED_X" />
+			</div>
+		</div>
+		<img
+			id="bigX"
+			src="X — kopia_bez_tla.png"
+			style="
+				display: none;
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				width: 600px;
+				z-index: 1000;
+			"
+		/>
+		<audio id="wastedSound">
+			<source src="wasted_GTA_sound.mp4" type="audio/mpeg" />
+		</audio>
+
+		<script>
+			let allQuestions = []
+			let currentQuestionIndex = 0
+			let answers = []
+			let currentTeam = "blue"
+			let originalTeam = "blue"
+			let revealedAnswers = new Set()
+			let isTeamBTurn = false
+			let mistakes = 0
+			let soundPlayed = false
+			let roundEnded = false
+			let roundFinalized = false
+
+			function loadQuestions() {
+				fetch("questions.json")
+					.then((response) => response.json())
+					.then((data) => {
+						allQuestions = data.questions
+						loadQuestion(0)
+					})
+					.catch((error) => {
+						console.error("Error loading questions:", error)
+					})
+			}
+
+			function loadQuestion(index) {
+				if (index >= allQuestions.length) index = 0
+				currentQuestionIndex = index
+				const question = allQuestions[index]
+
+				// Ustawienie pytania
+				const questionTitle = document
+					.getElementById("main_question")
+					.querySelector("h3")
+				questionTitle.innerText = question.title
+				questionTitle.style.visibility = "hidden"
+
+				answers = question.answers
+				revealedAnswers.clear()
+				isTeamBTurn = false
+				mistakes = 0
+				soundPlayed = false
+				roundEnded = false
+				roundFinalized = false
+
+				// Pobieramy wszystkie wiersze <li>
+				const listItems = document.querySelectorAll(
+					"#main_question ol li",
+				)
+
+				// Dynamiczne ukrywanie/pokazywanie wierszy w zależności od liczby odpowiedzi w JSON
+				listItems.forEach((li, i) => {
+					const n = i + 1
+					const answerSpan = document.getElementById("a" + n)
+					const pointsSpan = document.getElementById("p" + n)
+
+					if (i < answers.length) {
+						// Jeśli odpowiedź istnieje - pokaż wiersz i zresetuj kropki
+						li.style.display = "flex" // Przywracamy flex, żeby layout działał
+						answerSpan.innerText = "............................"
+						pointsSpan.innerText = ""
+					} else {
+						// Jeśli nie ma odpowiedzi (np. pytanie ma tylko 4) - ukryj cały wiersz
+						li.style.display = "none"
+					}
+				})
+
+				document.getElementById("suma").innerText = "0"
+
+				// Resetuj Iksy
+				document
+					.querySelectorAll(".mistakes img")
+					.forEach((img) => (img.style.opacity = "0"))
+
+				// Resetuj style drużyn
+				resetTeamStyles()
+				updateAvailablePoints()
+			}
+
+			function resetTeamStyles() {
+				const teams = ["blue_team", "red_team"]
+				teams.forEach((id) => {
+					const el = document.getElementById(id)
+					el.style.boxShadow = "none"
+					el.style.borderWidth = "3px"
+					el.style.borderColor =
+						id === "blue_team"
+							? "rgba(30, 144, 255, 0.5)"
+							: "rgba(255, 0, 0, 0.5)"
+				})
+			}
+
+			function updateAvailablePoints() {
+				let totalPoints = answers.reduce(
+					(sum, ans) => sum + ans.points,
+					0,
+				)
+				document
+					.getElementById("avaible_point")
+					.querySelector("p").innerText = totalPoints
+			}
+
+			function setTeam(team) {
+				if (isTeamBTurn) return
+				resetTeamStyles()
+
+				const el = document.getElementById(team + "_team")
+				if (team === "blue") {
+					el.style.boxShadow = "0 0 25px #1e90ff"
+					el.style.borderColor = "#1e90ff"
+				} else {
+					el.style.boxShadow = "0 0 25px red"
+					el.style.borderColor = "red"
+				}
+				el.style.borderWidth = "7.5px"
+				currentTeam = team
+				originalTeam = team
+			}
+
+			function reveal(n) {
+				// Sprawdzamy czy odpowiedź o tym numerze w ogóle istnieje w JSON
+				if (!answers[n - 1] || revealedAnswers.has(n)) return
+
+				document
+					.getElementById("main_question")
+					.querySelector("h3").style.visibility = "visible"
+
+				const answerElement = document.getElementById("a" + n)
+				answerElement.innerHTML = `<span class="reveal-animation">${answers[n - 1].text}</span>`
+				document.getElementById("p" + n).innerText =
+					answers[n - 1].points
+				revealedAnswers.add(n)
+
+				if (!roundFinalized) {
+					// --- POPRAWKA TUTAJ ---
+					let suma = 0
+					// Iterujemy tylko po odkrytych numerach (Set revealedAnswers)
+					revealedAnswers.forEach((num) => {
+						// Pobieramy punkty bezpośrednio z tablicy answers zamiast z DOM
+						suma += answers[num - 1].points
+					})
+					document.getElementById("suma").innerText = suma
+					// -----------------------
+				}
+			}
+
+			function endRound(winner) {
+				let suma = parseInt(document.getElementById("suma").innerText)
+				let scoreElement = document.querySelector(`#${winner}_team p`)
+				scoreElement.innerText = parseInt(scoreElement.innerText) + suma
+				roundFinalized = true
+			}
+
+			document.addEventListener("keydown", function (e) {
+				if (e.key === "Enter") {
+					// Koniec rundy następuje gdy odkryto TYLE odpowiedzi, ile jest w tablicy answers z JSONa
+					if (
+						roundEnded ||
+						(revealedAnswers.size === answers.length &&
+							!roundFinalized)
+					) {
+						if (!roundFinalized) endRound(originalTeam)
+						roundEnded = false
+						roundFinalized = false
+						loadQuestion(currentQuestionIndex + 1)
+					}
+					return
+				}
+
+				if (e.key === "ArrowLeft") setTeam("blue")
+				if (e.key === "ArrowRight") setTeam("red")
+
+				if (e.key >= "1" && e.key <= "5") {
+					let n = parseInt(e.key)
+					if (!isTeamBTurn) {
+						reveal(n)
+					} else if (!roundFinalized) {
+						reveal(n)
+						endRound(currentTeam)
+						roundEnded = true
+					} else {
+						reveal(n)
+					}
+				}
+
+				if (e.code === "Space") {
+					e.preventDefault()
+					if (!isTeamBTurn) {
+						mistakes++
+						let side = originalTeam === "blue" ? "left" : "right"
+						let xs = document.querySelectorAll(
+							`#${side}_mistakes img`,
+						)
+						if (mistakes <= 3) xs[mistakes - 1].style.opacity = "1"
+
+						if (mistakes === 3) {
+							playWasted()
+							isTeamBTurn = true
+							currentTeam =
+								originalTeam === "blue" ? "red" : "blue"
+							setTeamVisualsForSteal()
+						}
+					} else {
+						playWasted()
+						endRound(originalTeam)
+						roundEnded = true
+					}
+				}
+			})
+
+			function setTeamVisualsForSteal() {
+				// Specjalna funkcja do wizualizacji przejęcia (Błąd 3x)
+				resetTeamStyles()
+				const el = document.getElementById(currentTeam + "_team")
+				el.style.boxShadow =
+					currentTeam === "blue" ? "0 0 25px #1e90ff" : "0 0 25px red"
+				el.style.borderColor =
+					currentTeam === "blue" ? "#1e90ff" : "red"
+				el.style.borderWidth = "7.5px"
+			}
+
+			function playWasted() {
+				let bigX = document.getElementById("bigX")
+				bigX.style.display = "block"
+				let audio = document.getElementById("wastedSound")
+				audio.currentTime = 0
+				audio.play()
+				setTimeout(() => {
+					bigX.style.display = "none"
+				}, 3000)
+			}
+
+			loadQuestions()
+		</script>
+	</body>
+</html>

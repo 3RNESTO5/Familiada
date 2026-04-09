@@ -1,0 +1,163 @@
+@font-face {
+	font-family: "GameFont";
+	src: url("fonts/Minecraftia.ttf") format("truetype");
+	font-weight: normal;
+	font-style: normal;
+}
+/* RESET */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+/* TŁO STRONY */
+body {
+	background: #111;
+	font-family: "Courier New", monospace;
+	color: white;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	border: 2px solid #666;
+	padding: 20px;
+	font-family: "GameFont", monospace;
+}
+
+/* ===================== */
+/* GÓRNY PANEL PUNKTÓW   */
+/* ===================== */
+
+#upper_points {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 40px;
+	margin-top: 1em;
+	margin-left: 2em;
+	margin-right: 2em;
+}
+
+.points {
+	width: 175px;
+	height: 100px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 12px;
+	font-size: 50px;
+	font-weight: bold;
+	transition:
+		box-shadow 0.3s ease,
+		border-width 0.3s ease;
+	border: 3px solid;
+}
+
+/* Niebieska drużyna */
+#blue_team {
+	border-color: #1e90ff;
+	color: #1e90ff;
+}
+
+/* Dostępne punkty */
+#avaible_point {
+	border-color: orange;
+	color: orange;
+}
+
+/* Czerwona drużyna */
+#red_team {
+	border-color: red;
+	color: red;
+}
+
+/* ===================== */
+/* DOLNA CZĘŚĆ TABLICY   */
+/* ===================== */
+
+#lower_part {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex: 1;
+}
+
+/* KOLUMNY Z X */
+.mistakes {
+	display: flex;
+	flex-direction: column;
+	gap: 25px;
+}
+
+/* obrazki X */
+.mistakes img {
+	width: 200px; /* możesz zmienić */
+	opacity: 0;
+}
+
+/* ===================== */
+/* ŚRODKOWA TABLICA      */
+/* ===================== */
+
+#main_question {
+	text-align: center;
+	width: 60%;
+}
+
+#main_question h3 {
+	font-size: 48px;
+	margin-bottom: 30px;
+	text-align: center;
+	visibility: hidden;
+}
+
+/* lista odpowiedzi */
+
+#main_question ol {
+	list-style: none;
+	counter-reset: answer;
+}
+
+#main_question li {
+	counter-increment: answer;
+	display: flex;
+	align-items: center;
+	gap: 15px;
+	font-size: 40px;
+	padding: 20px;
+	margin-bottom: 15px;
+}
+
+#main_question li::before {
+	content: counter(answer) ". ";
+	margin-right: 0;
+	font-weight: bold;
+	min-width: 50px;
+}
+
+#main_question span {
+	font-size: 42px;
+	font-weight: bold;
+}
+
+#main_question li span:last-child {
+	margin-left: auto;
+}
+
+/* SUMA */
+
+#main_question p {
+	margin-top: 30px;
+	font-size: 32px;
+	text-align: right;
+}
+.active-blue {
+	box-shadow: 0 0 25px #1e90ff !important;
+	outline: 5px solid #1e90ff; /* outline nie zajmuje miejsca, więc nie przesunie boxów */
+}
+
+.active-red {
+	box-shadow: 0 0 25px red !important;
+	outline: 5px solid red;
+}
