@@ -310,6 +310,12 @@
 						roundEnded = true
 					}
 				}
+
+				if (e.key === "Backspace") {
+					e.preventDefault()
+					document.querySelector("#blue_team p").innerText = "0"
+					document.querySelector("#red_team p").innerText = "0"
+				}
 			})
 
 			function setTeamVisualsForSteal() {
