@@ -132,12 +132,13 @@
 		},
 		{
 			"id": 12,
-			"title": "12. Z czym rymuje się “wykład”?",
+			"title": "12. Co studenci UEP najczęściej wybierają na WF?",
 			"answers": [
-				{ "text": "Przykład", "points": 38 },
-				{ "text": "Zakład", "points": 28 },
-				{ "text": "Z niczym", "points": 20 },
-				{ "text": "Chodź na piwo", "points": 14 }
+				{ "text": "Siłownia", "points": 52 },
+				{ "text": "Body and Mind", "points": 22 },
+				{ "text": "Nordic walking ", "points": 12 },
+				{ "text": "Sporty zespołowe", "points": 8 },
+				{ "text": "Basen ", "points": 6 }
 			]
 		},
 		{
@@ -278,13 +279,13 @@
 		},
 		{
 			"id": 24,
-			"title": "24. Najlepsza dzielnica w Poznaniu",
+			"title": "24. Jakie słowo najbardziej przeraża studenta?",
 			"answers": [
-				{ "text": "Stare Miasto / Centrum", "points": 40 },
-				{ "text": "Jeżyce", "points": 20 },
-				{ "text": "Winogrady", "points": 15 },
-				{ "text": "Rataje", "points": 13 },
-				{ "text": "Wilda", "points": 12 }
+				{ "text": "Sesja", "points": 35 },
+				{ "text": "Egzamin / Kolokwium", "points": 25 },
+				{ "text": "Wejściówka / „Wyciągnijcie kartki”", "points": 20 },
+				{ "text": "Mikroekonomia", "points": 12 },
+				{ "text": "Poprawka / Warunek", "points": 8 }
 			]
 		},
 		{
@@ -479,28 +480,6 @@
 				{ "text": "Pasibus", "points": 14 },
 				{ "text": "Hot dog / przekąski z Żabki", "points": 10 },
 				{ "text": "Piccolo", "points": 8 }
-			]
-		},
-		{
-			"id": 41,
-			"title": "41. Co studenci UEP najczęściej wybierają na WF?",
-			"answers": [
-				{ "text": "Siłownia", "points": 52 },
-				{ "text": "Body and Mind", "points": 22 },
-				{ "text": "Nordic walking ", "points": 12 },
-				{ "text": "Sporty zespołowe", "points": 8 },
-				{ "text": "Basen ", "points": 6 }
-			]
-		},
-		{
-			"id": 42,
-			"title": "42. Jakie słowo najbardziej przeraża studenta?",
-			"answers": [
-				{ "text": "Sesja", "points": 35 },
-				{ "text": "Egzamin / Kolokwium", "points": 25 },
-				{ "text": "Wejściówka / „Wyciągnijcie kartki”", "points": 20 },
-				{ "text": "Mikroekonomia", "points": 12 },
-				{ "text": "Poprawka / Warunek", "points": 8 }
 			]
 		}
 	]
