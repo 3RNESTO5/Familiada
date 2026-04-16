@@ -1,28 +1,29 @@
 @font-face {
-	font-family: "GameFont";
-	src: url("fonts/Minecraftia.ttf") format("truetype");
-	font-weight: normal;
-	font-style: normal;
+    font-family: "GameFont";
+    src: url("fonts/Minecraftia.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
 }
+
 /* RESET */
 * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 /* TŁO STRONY */
 body {
-	background: #111;
-	font-family: "Courier New", monospace;
-	color: white;
-	height: 100vh;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	border: 2px solid #666;
-	padding: 20px;
-	font-family: "GameFont", monospace;
+    background: #111;
+    color: white;
+    /* Zmieniamy height na min-height, aby treść mogła urosnąć */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #666;
+    padding: 1vw; /* padding zależny od szerokości ekranu */
+    font-family: "GameFont", "Courier New", monospace;
+    overflow-x: hidden; /* zapobiega przesuwaniu na boki */
 }
 
 /* ===================== */
@@ -30,70 +31,61 @@ body {
 /* ===================== */
 
 #upper_points {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	margin-bottom: 40px;
-	margin-top: 1em;
-	margin-left: 2em;
-	margin-right: 2em;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 2vh 0; /* margines zależny od wysokości ekranu */
+    flex-wrap: wrap; /* na bardzo małych ekranach punkty przeskoczą pod siebie */
+    gap: 10px;
 }
 
 .points {
-	width: 175px;
-	height: 100px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	border-radius: 12px;
-	font-size: 50px;
-	font-weight: bold;
-	transition:
-		box-shadow 0.3s ease,
-		border-width 0.3s ease;
-	border: 3px solid;
+    /* Używamy jednostek elastycznych */
+    width: 20vw; 
+    max-width: 180px;
+    min-width: 100px;
+    height: auto;
+    aspect-ratio: 16 / 9; /* zachowuje proporcje prostokąta */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    font-size: clamp(20px, 4vw, 50px); /* płynnie skaluje czcionkę */
+    font-weight: bold;
+    border: 3px solid;
+    transition: box-shadow 0.3s ease;
 }
 
-/* Niebieska drużyna */
-#blue_team {
-	border-color: #1e90ff;
-	color: #1e90ff;
-}
-
-/* Dostępne punkty */
-#avaible_point {
-	border-color: orange;
-	color: orange;
-}
-
-/* Czerwona drużyna */
-#red_team {
-	border-color: red;
-	color: red;
-}
+#blue_team { border-color: #1e90ff; color: #1e90ff; }
+#avaible_point { border-color: orange; color: orange; }
+#red_team { border-color: red; color: red; }
 
 /* ===================== */
 /* DOLNA CZĘŚĆ TABLICY   */
 /* ===================== */
 
 #lower_part {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex: 1;
+    gap: 10px;
+    padding: 10px;
 }
 
 /* KOLUMNY Z X */
 .mistakes {
-	display: flex;
-	flex-direction: column;
-	gap: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 15%; /* stała szerokość bocznych kolumn */
 }
 
-/* obrazki X */
 .mistakes img {
-	width: 200px; /* możesz zmienić */
-	opacity: 0;
+    width: 100%; /* obrazek zajmie całą szerokość kolumny .mistakes */
+    max-width: 150px;
+    height: auto;
+    opacity: 0;
 }
 
 /* ===================== */
@@ -101,63 +93,73 @@ body {
 /* ===================== */
 
 #main_question {
-	text-align: center;
-	width: 60%;
+    text-align: center;
+    flex: 1; /* zajmuje resztę wolnego miejsca */
+    max-width: 65%;
 }
 
 #main_question h3 {
-	font-size: 48px;
-	margin-bottom: 30px;
-	text-align: center;
-	visibility: hidden;
+    font-size: clamp(18px, 3vw, 40px); /* skalowalny nagłówek */
+    margin-bottom: 20px;
+    visibility: hidden;
 }
 
-/* lista odpowiedzi */
-
 #main_question ol {
-	list-style: none;
-	counter-reset: answer;
+    list-style: none;
+    counter-reset: answer;
+    width: 100%;
 }
 
 #main_question li {
-	counter-increment: answer;
-	display: flex;
-	align-items: center;
-	gap: 15px;
-	font-size: 40px;
-	padding: 20px;
-	margin-bottom: 15px;
+    counter-increment: answer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: clamp(14px, 2.5vw, 32px); /* skalowalne napisy odpowiedzi */
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border: 1px solid #444; /* obramowanie odpowiedzi żeby było widać strukturę */
+    background: #222;
 }
 
 #main_question li::before {
-	content: counter(answer) ". ";
-	margin-right: 0;
-	font-weight: bold;
-	min-width: 50px;
+    content: counter(answer) ". ";
+    font-weight: bold;
 }
 
 #main_question span {
-	font-size: 42px;
-	font-weight: bold;
+    font-size: inherit; /* dziedziczy po li */
 }
 
 #main_question li span:last-child {
-	margin-left: auto;
+    margin-left: auto;
+    background: #333;
+    padding: 0 10px;
 }
 
 /* SUMA */
-
 #main_question p {
-	margin-top: 30px;
-	font-size: 32px;
-	text-align: right;
-}
-.active-blue {
-	box-shadow: 0 0 25px #1e90ff !important;
-	outline: 5px solid #1e90ff; /* outline nie zajmuje miejsca, więc nie przesunie boxów */
+    margin-top: 20px;
+    font-size: clamp(16px, 2vw, 28px);
+    text-align: right;
 }
 
-.active-red {
-	box-shadow: 0 0 25px red !important;
-	outline: 5px solid red;
+/* STYLE DLA MOBILES (PIONOWO) */
+@media (max-width: 768px) {
+    #lower_part {
+        flex-direction: column; /* układa iksy i tablicę pionowo na telefonach */
+        align-items: center;
+    }
+    .mistakes {
+        flex-direction: row; /* iksy obok siebie zamiast pod sobą */
+        width: 100%;
+        justify-content: center;
+    }
+    .mistakes img {
+        width: 50px;
+    }
+    #main_question {
+        max-width: 100%;
+        width: 100%;
+    }
 }
